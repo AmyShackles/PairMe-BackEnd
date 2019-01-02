@@ -1,5 +1,5 @@
 {
-  "name": "PairMe-BackEnd",
+  "name": "pairme-backend",
   "version": "1.0.0",
   "description": "This is the back-end project for PairMe, the Winter 2019 Hackathon",
   "main": "index.js",
@@ -18,6 +18,18 @@
   "bugs": {
     "url": "https://github.com/AmyShackles/PairMe-BackEnd/issues"
   },
+  "husky": {
+    "hooks": {
+      "pre-commit": "lint-staged"
+    }
+  },
+  "lint-staged": {
+    "linters": {
+      "*.{js}": [
+        "git add"
+      ]
+    }
+  },
   "homepage": "https://github.com/AmyShackles/PairMe-BackEnd#readme",
   "dependencies": {
     "cors": "^2.8.5",
@@ -29,6 +41,8 @@
     "sqlite3": "^4.0.4"
   },
   "devDependencies": {
+    "husky": "^1.3.1",
+    "lint-staged": "^8.1.0",
     "nodemon": "^1.18.9"
   }
 }
