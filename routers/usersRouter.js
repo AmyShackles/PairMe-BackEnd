@@ -12,13 +12,15 @@ const router = express.Router();
 const generateToken = user => {
   const payload = {
     subject: user.id,
-    username: user.username
+    username: user.username,
+    email: user.email,
+    slackHandle: user.slack_handle
   };
 
-  const secret = process.env.JWT_SECRET || "super secret!";
+  const secret = process.env.JWT_SECRET || "super secret!"; // don't forget to update production environment
 
   const options = {
-    expiresIn: "1h"
+    expiresIn: "6h"
   };
 
   return jwt.sign(payload, secret, options);
@@ -41,24 +43,48 @@ router.get("/", (req, res) => {
 // registers an new user
 router.post("/register", async (req, res) => {
   const newUser = req.body;
-  const availableEmail = await usersDb.availableEmail(newUser.email);
-  const availableUsername = await usersDb.availableUsername(newUser.username);
+  try {
+    const availableEmail = await usersDb.availableEmail(newUser.email);
+    const availableUsername = await usersDb.availableUsername(newUser.username);
+    const availableHandle = await usersDb.availableHandle(newUser.slack_handle);
 
-  if (availableEmail && availableUsername) {
-    usersDb
-      .registerUser(newUser)
-      .then(id => {
-        res.status(201).json(id);
-      })
-      .catch(err => {
-        res.status(500).json({ message: "Error registering new user" });
-      });
-  } else {
-    availableEmail
-      ? res.status(400).json({ message: "Username already in use" })
-      : availableUsername
-      ? res.status(400).json({ message: "Email already in use" })
-      : res.status(400).json({ message: "Username and email already in use" });
+    if (availableEmail && availableUsername && availableHandle) {
+      const insertResponse = await usersDb.registerUser(newUser);
+      const token = generateToken(newUser);
+      res.status(201).json({ insertResponse, token });
+    } else {
+      switch (true) {
+        case availableEmail && availableUsername:
+          res.status(400).json({ message: "Handle already in use" });
+          break;
+        case availableEmail && availableHandle:
+          res.status(400).json({ message: "Username already in use" });
+          break;
+        case availableHandle && availableUsername:
+          res.status(400).json({ message: "Email already in use" });
+          break;
+        case availableEmail:
+          res
+            .status(400)
+            .json({ message: "Username and handle already in use" });
+          break;
+        case availableUsername:
+          res.status(400).json({ message: "Email and handle already in use" });
+          break;
+        case availableHandle:
+          res
+            .status(400)
+            .json({ message: "Email and username already in use" });
+          break;
+        default:
+          res
+            .status(400)
+            .json({ message: "Email, username, and handle already in use" });
+          break;
+      }
+    }
+  } catch (err) {
+    res.status(500).json({ message: "Error registering new user", err });
   }
 });
 
