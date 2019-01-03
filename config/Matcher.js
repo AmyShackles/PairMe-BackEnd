@@ -1,48 +1,50 @@
 class PM {
   constructor() {
-    this.JS = []
+    this.js = ['@Nando']
     this.python = []
-    this.React = []
+    this.react = []
     this.css = []
-    this.topics = ['JS', 'python', 'React', 'css']
+    this.topics = ['js', 'python', 'react', 'css']
   }
   _remove(topic) {
+    console.log('remove topic:', topic)
     const teacher = this[topic].shift()
     for (let i = 0; i < this.topics.length; i++) {
-      this[this.topics[i]] = this[this.topics[i]].filter(e => e !== teacher)
       console.log(this[this.topics[i]])
+      this[this.topics[i]] = this[this.topics[i]].filter(e => e !== teacher)
     }
     return teacher
   }
   _peek(topic) {
-    return this[topic][0]
+    return this[topic][0] ? true : false
   }
   _add(topics, user) {
-    if (topics.length === 0) return this.JS.push(user)
+    if (topics.length === 0) return this.js.push(user)
     for (let i = 0; i < topics.length; i++) {
-      if (topics[i] in this.topics) this[topics[i]].push(user)
+      if (topics[i].toLowerCase() in this.topics)
+        this[topics[i].toLowerCase()].push(user)
     }
   }
 }
 
 class Student {
   constructor() {
-    this.JS = []
+    this.js = ['@Peter']
     this.python = []
-    this.React = []
+    this.react = []
     this.css = []
-    this.topics = ['JS', 'python', 'React', 'css']
+    this.topics = ['js', 'python', 'react', 'css']
   }
   _remove(topic) {
     return this[topic].shift()
   }
   _peek(topic) {
-    return this[topic][0]
+    return this[topic][0] ? true : false
   }
   _add(topics, user) {
-    if (topics.length === 0) return this.JS.push(user)
+    if (topics.length === 0) return this.js.push(user)
     for (let i = 0; i < topics.length; i++) {
-      if (topics[i] in this.topics) this[topics[i]].push(user)
+      if (topics[i].toLowerCase() in this.topics) this[topics[i]].push(user)
     }
   }
 }
@@ -51,16 +53,23 @@ const teacher = new PM()
 const student = new Student()
 
 function match(topics) {
-  topics.forEach(topic => {
-    if (student._peek(topic) && teacher._peek(topic)) {
-      const student_id = student._remove(topic)
-      const teacher_id = teacher._remove(topic)
+  for (let i = 0; i < topics.length; i++) {
+    if (
+      student._peek(topics[i].toLowerCase()) &&
+      teacher._peek(topics[i].toLowerCase())
+    ) {
+      const student_id = student._remove(topics[i])
+      const teacher_id = teacher._remove(topics[i])
       return [student_id, teacher_id]
-    } else {
-      return false
     }
-  })
+  }
+  return []
 }
+
+const [user1, user2] = match(['js'])
+
+console.log(user1, user2)
+console.log(student, teacher)
 
 module.exports = {
   teacher,

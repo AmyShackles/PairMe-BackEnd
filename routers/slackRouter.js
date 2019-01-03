@@ -43,6 +43,7 @@ router.post('/', async (req, res) => {
   console.log(req.body)
   const { text, user } = req.body.event
   const topics = text.split(' ')
+  topics.splice(0)
 
   if (text.includes('assist')) {
     teacher._add(topics, user)
