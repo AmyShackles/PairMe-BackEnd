@@ -44,3 +44,9 @@ if (student._peek('React') && teacher._peek('React')) {
 }
 
 // console.log(teacher, student)
+module.exports = {
+  PM,
+  Student,
+  teacher,
+  student
+}
