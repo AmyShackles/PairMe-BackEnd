@@ -17,25 +17,17 @@ function getUsers() {
 
 // register new user if valid
 async function registerUser(user) {
-  const newUser = user
   const hash = await bcrypt
-    .hash(newUser.password, 14)
+    .hash(user.password, 12)
     .catch(e => console.log("hashing function error!"))
-  newUser.username = newUser.username.toLowerCase()
-  newUser.email = newUser.email.toLowerCase()
-  newUser.slack_handle = newUser.slack_handle.toLowerCase()
-  newUser.password = hash
+  user.username = user.username.toLowerCase()
+  user.email = user.email.toLowerCase()
+  user.slack_handle = user.slack_handle.toLowerCase()
+  user.password = hash
 
-  console.log(newUser)
-  return db("users")
-    .insert(newUser)
-    .then(id => {
-      console.log(id)
-      return id
-    })
-    .catch(err => {
-      return false
-    })
+  // no catch to let the error bubble up for the "parent" try / catch block
+  const id = await db("users").insert(user)
+  return id
 }
 
 // true if username is not in database

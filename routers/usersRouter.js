@@ -66,7 +66,9 @@ router.post("/register", async (req, res) => {
   const newUser = req.body
   try {
     const insertResponse = await usersDb.registerUser(newUser)
+
     const token = generateToken(newUser)
+
     res.status(201).json({ insertResponse, token })
   } catch (err) {
     res.status(500).json({ message: "Error registering new user", err })
