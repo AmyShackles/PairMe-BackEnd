@@ -1,13 +1,15 @@
 require('dotenv').config()
 const router = require('express').Router()
-const Matcher = require('./config/Matcher.js')
+const Matcher = require('../config/Matcher.js')
 const clientID = process.env.CLIENTID
 const clientSecret = process.env.CLIENTSECRET
 const request = require('request')
 
-server.get('/', (req, res) => {
-  res.send(req.body.challenge)
-})
+// uncomment for URL registration with slack API
+// router.post('/', (req, res) => {
+//   const { challenge } = req.body
+//   res.send(challenge)
+// })
 
 router.get('/oauth', function(req, res) {
   if (!req.query.code) {
