@@ -14,5 +14,5 @@ bot.on("error", err => console.log(err))
 
 bot.postMessageChannel(
   "pair_me",
-  `Hey, ${user1}, ${user2} is available to help!`
+  `Hey, @${user1}, @${user2} is available to help!`
 )
