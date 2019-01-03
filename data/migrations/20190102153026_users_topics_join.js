@@ -6,17 +6,29 @@
 // offer_beacon - required, boolean, default false
 
 exports.up = function(knex, Promise) {
-  return knex.schema.createTable('users_topics_join', tbl => {
-    tbl.increments();
-    tbl.integer('user_id').unsigned().notNullable();
-    tbl.foreign('user_id').references('id').inTable('users').onDelete('CASCADE');
-    tbl.integer('topic_id').unsigned().notNullable();
-    tbl.foreign('topic_id').references('id').inTable('topics').onDelete('CASCADE');
-    tbl.boolean('ask_beacon').notNullable().defaultTo(false);
-    tbl.boolean('offer_beacon').notNullable().defaultTo(false);
-  });
-};
+  return knex.schema.createTable("users_topics_join", tbl => {
+    tbl.increments()
+    tbl
+      .integer("user_id")
+      .unsigned()
+      .notNullable()
+    tbl
+      .foreign("user_id")
+      .references("id")
+      .inTable("users")
+      .onDelete("CASCADE")
+    tbl
+      .integer("topic_id")
+      .unsigned()
+      .notNullable()
+    tbl
+      .foreign("topic_id")
+      .references("id")
+      .inTable("topics")
+      .onDelete("CASCADE")
+  })
+}
 
 exports.down = function(knex, Promise) {
-  return knex.schema.dropTableIfExists('users_topics_join');
-};
+  return knex.schema.dropTableIfExists("users_topics_join")
+}
