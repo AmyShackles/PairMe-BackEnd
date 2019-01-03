@@ -1,5 +1,4 @@
 require("dotenv").config()
-
 const clientID = process.env.CLIENTID
 const clientSecret = process.env.CLIENTSECRET
 var request = require("request")
@@ -40,6 +39,15 @@ server.get("/oauth", function(req, res) {
 server.post("/command", function(req, res) {
   res.send("Your ngrok tunnel is up and running!")
 })
+
+// const headers = {
+//   "Content-Type": "application/json",
+//   Authorization: `Bearer ${process.env.ZOOMTOKEN}`
+// }
+// axios
+//   .post("https://api.zoom.us/v2/users/meeting", headers)
+//   .then(response => response.send(response))
+//   .catch(err => console.log(err))
 
 const port = process.env.PORT || 5555 // update production environment PORT
 server.listen(port, () =>
