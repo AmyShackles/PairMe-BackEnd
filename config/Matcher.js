@@ -1,16 +1,14 @@
 class PM {
   constructor() {
-    this.js = ['@Nando']
+    this.js = []
     this.python = []
     this.react = []
     this.css = []
     this.topics = ['js', 'python', 'react', 'css']
   }
   _remove(topic) {
-    console.log('remove topic:', topic)
     const teacher = this[topic].shift()
     for (let i = 0; i < this.topics.length; i++) {
-      console.log(this[this.topics[i]])
       this[this.topics[i]] = this[this.topics[i]].filter(e => e !== teacher)
     }
     return teacher
@@ -21,15 +19,16 @@ class PM {
   _add(topics, user) {
     if (topics.length === 0) return this.js.push(user)
     for (let i = 0; i < topics.length; i++) {
-      if (topics[i].toLowerCase() in this.topics)
+      if (this.topics.includes(topics[i].toLowerCase())) {
         this[topics[i].toLowerCase()].push(user)
+      }
     }
   }
 }
 
 class Student {
   constructor() {
-    this.js = ['@Peter']
+    this.js = []
     this.python = []
     this.react = []
     this.css = []
@@ -44,7 +43,8 @@ class Student {
   _add(topics, user) {
     if (topics.length === 0) return this.js.push(user)
     for (let i = 0; i < topics.length; i++) {
-      if (topics[i].toLowerCase() in this.topics) this[topics[i]].push(user)
+      if (this.topics.includes(topics[i].toLowerCase()))
+        this[topics[i].toLowerCase()].push(user)
     }
   }
 }
@@ -65,11 +65,6 @@ function match(topics) {
   }
   return []
 }
-
-const [user1, user2] = match(['js'])
-
-console.log(user1, user2)
-console.log(student, teacher)
 
 module.exports = {
   teacher,
