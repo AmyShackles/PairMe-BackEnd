@@ -39,8 +39,9 @@ router.get('/oauth', function(req, res) {
   }
 })
 
-router.post('/', async (req, res) => {
+router.post('/', (req, res) => {
   console.log(req.body)
+  res.status(200).send({ ok: true })
   const { text, user } = req.body.event
   const topics = text.split(' ')
   topics.splice(0, 1)
@@ -49,27 +50,27 @@ router.post('/', async (req, res) => {
     teacher._add(topics, user)
     const [user1, user2] = match(topics)
     if (user1 && user2) {
-      const message = `Hey, @${user1}, @${user2} is available to help!`
+      const message = `Hey, <@${user1}>, <@${user2}> is available to help!`
       axios.post(
         'https://hooks.slack.com/services/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',
-        message
+        { text: message }
       )
     }
   } else if (text.includes('help')) {
     student._add(topics, user)
     const [user1, user2] = match(topics)
     if (user1 && user2) {
-      const message = `Hey, @${user1}, @${user2} is available to help!`
+      const message = `Hey, <@${user1}>, <@${user2}> is available to help!`
       axios.post(
         'https://hooks.slack.com/services/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',
-        message
+        { text: message }
       )
     }
   } else {
-    const message = `Hey, @${user}, I do not understand that command.`
+    const message = `Hey, <@${user}>, I do not understand that command.`
     axios.post(
       'https://hooks.slack.com/services/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',
-      message
+      { text: message }
     )
   }
 })
