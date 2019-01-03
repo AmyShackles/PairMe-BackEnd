@@ -47,7 +47,23 @@ class Student {
   }
 }
 
+const teacher = new PM()
+const student = new Student()
+
+function match(topics) {
+  topics.forEach(topic => {
+    if (student._peek(topic) && teacher._peek(topic)) {
+      const student_id = student._remove(topic)
+      const teacher_id = teacher._remove(topic)
+      return [student_id, teacher_id]
+    } else {
+      return false
+    }
+  })
+}
+
 module.exports = {
-  teacher: new PM(),
-  student: new Student()
+  teacher,
+  student,
+  match
 }

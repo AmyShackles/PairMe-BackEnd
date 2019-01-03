@@ -1,6 +1,7 @@
 require('dotenv').config()
+const axios = require(axios)
 const router = require('express').Router()
-const { student, teacher } = require('../config/Matcher.js')
+const { student, teacher, match } = require('../config/Matcher.js')
 const clientID = process.env.CLIENTID
 const clientSecret = process.env.CLIENTSECRET
 const request = require('request')
@@ -38,18 +39,34 @@ router.get('/oauth', function(req, res) {
   }
 })
 
-router.post('/', (req, res) => {
+router.post('/', async (req, res) => {
   console.log(req.body)
   const { text, user } = req.body.event
-  const topics = text.split(' ').splice(0)
-  res.sendStatus(200)
+  const topics = text.split(' ')
+
   if (text.includes('assist')) {
     teacher._add(topics, user)
+    const [user1, user2] = match(topics)
+    if (user1 && user2) {
+      const message = `Hey, @${user1}, @${user2} is available to help!`
+      axios.post(
+        'https://hooks.slack.com/services/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',
+        message
+      )
+    }
     console.log(
       'This would have been the adding of a teacher to the Teacher class.'
     )
   } else if (text.includes('help')) {
     student._add(topics, user)
+    const [user1, user2] = match(topics)
+    if (user1 && user2) {
+      const message = `Hey, @${user1}, @${user2} is available to help!`
+      axios.post(
+        'https://hooks.slack.com/services/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',
+        message
+      )
+    }
     console.log(
       'This would have been the adding of a student to the Student class.'
     )
