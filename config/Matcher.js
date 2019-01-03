@@ -1,9 +1,9 @@
 class PM {
   constructor() {
-    this.JS = ['@Nando', '@Amy', '@Kai']
-    this.python = ['@Nando', '@Amy', '@Kai']
-    this.React = ['@Nando', '@Amy', '@Kai']
-    this.css = ['@Nando', '@Amy', '@Kai']
+    this.JS = []
+    this.python = []
+    this.React = []
+    this.css = []
     this.topics = ['JS', 'python', 'React', 'css']
   }
   _remove(topic) {
@@ -17,13 +17,19 @@ class PM {
   _peek(topic) {
     return this[topic][0]
   }
+  _add(topics, user) {
+    if (topics.length === 0) return this.JS.push(user)
+    for (let i = 0; i < topics.length; i++) {
+      if (topics[i] in this.topics) this[topics[i]].push(user)
+    }
+  }
 }
 
 class Student {
   constructor() {
     this.JS = []
     this.python = []
-    this.React = ['@Nando']
+    this.React = []
     this.css = []
     this.topics = ['JS', 'python', 'React', 'css']
   }
@@ -33,20 +39,15 @@ class Student {
   _peek(topic) {
     return this[topic][0]
   }
+  _add(topics, user) {
+    if (topics.length === 0) return this.JS.push(user)
+    for (let i = 0; i < topics.length; i++) {
+      if (topics[i] in this.topics) this[topics[i]].push(user)
+    }
+  }
 }
 
-const teacher = new PM()
-const student = new Student()
-
-// console.log(teacher, student)
-if (student._peek('React') && teacher._peek('React')) {
-  student._remove('React') && teacher._remove('React')
-}
-
-// console.log(teacher, student)
 module.exports = {
-  PM,
-  Student,
-  teacher,
-  student
+  teacher: new PM(),
+  student: new Student()
 }
