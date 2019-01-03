@@ -1,12 +1,12 @@
-require("dotenv").config();
+require("dotenv").config()
 
-const express = require("express");
+const express = require("express")
 
-const jwt = require("jsonwebtoken");
+const jwt = require("jsonwebtoken")
 
-const usersDb = require("../data/helpers/usersHelpers.js");
+const usersDb = require("../data/helpers/usersHelpers.js")
 
-const router = express.Router();
+const router = express.Router()
 
 // generates jwt
 const generateToken = user => {
@@ -15,77 +15,62 @@ const generateToken = user => {
     username: user.username,
     email: user.email,
     slackHandle: user.slack_handle
-  };
+  }
 
-  const secret = process.env.JWT_SECRET || "super secret!"; // don't forget to update production environment
+  const secret = process.env.JWT_SECRET || "super secret!" // don't forget to update production environment
 
   const options = {
     expiresIn: "6h"
-  };
+  }
 
-  return jwt.sign(payload, secret, options);
-};
+  return jwt.sign(payload, secret, options)
+}
 
 // [GET] /api/users
 // returns array of all users in db (or empty if none)
-router.get("/", (req, res) => {
-  usersDb
-    .getUsers()
-    .then(users => {
-      res.status(200).json(users);
-    })
-    .catch(err => {
-      res.status(500).json({ message: "Error retreiving users" });
-    });
-});
+// router.get("/", (req, res) => {
+//   usersDb
+//     .getUsers()
+//     .then(users => {
+//       res.status(200).json(users)
+//     })
+//     .catch(err => {
+//       res.status(500).json({ message: "Error retreiving users" })
+//     })
+// })
 
 // [POST] /api/users/register
 // registers an new user
+router.post("/checkuser", async (req, res) => {
+  const { username } = req.body
+  const availableUsername = await usersDb.availableUsername(username)
+  if (availableUsername) return res.status(200).end()
+  return res.status(400).send({ err: "Name taken!" })
+})
+
+router.post("/checkmail", async (req, res) => {
+  const { email } = req.body
+  const availableEmail = await usersDb.availableEmail(email)
+  if (availableEmail) return res.status(200).end()
+  return res.status(400).send({ err: "email taken!" })
+})
+
+router.post("/slackhandle", async (req, res) => {
+  const { slackhandle } = req.body
+  const availableHandle = await usersDb.availableHandle(slackhandle)
+  if (availableHandle) return res.status(200).end()
+  return res.status(400).send({ err: "Handle taken!" })
+})
+
 router.post("/register", async (req, res) => {
-  const newUser = req.body;
+  const newUser = req.body
   try {
-    const availableEmail = await usersDb.availableEmail(newUser.email);
-    const availableUsername = await usersDb.availableUsername(newUser.username);
-    const availableHandle = await usersDb.availableHandle(newUser.slack_handle);
-
-    if (availableEmail && availableUsername && availableHandle) {
-      const insertResponse = await usersDb.registerUser(newUser);
-      const token = generateToken(newUser);
-      res.status(201).json({ insertResponse, token });
-    } else {
-      switch (true) {
-        case availableEmail && availableUsername:
-          res.status(400).json({ message: "Handle already in use" });
-          break;
-        case availableEmail && availableHandle:
-          res.status(400).json({ message: "Username already in use" });
-          break;
-        case availableHandle && availableUsername:
-          res.status(400).json({ message: "Email already in use" });
-          break;
-        case availableEmail:
-          res
-            .status(400)
-            .json({ message: "Username and handle already in use" });
-          break;
-        case availableUsername:
-          res.status(400).json({ message: "Email and handle already in use" });
-          break;
-        case availableHandle:
-          res
-            .status(400)
-            .json({ message: "Email and username already in use" });
-          break;
-        default:
-          res
-            .status(400)
-            .json({ message: "Email, username, and handle already in use" });
-          break;
-      }
-    }
+    const insertResponse = await usersDb.registerUser(newUser)
+    const token = generateToken(newUser)
+    res.status(201).json({ insertResponse, token })
   } catch (err) {
-    res.status(500).json({ message: "Error registering new user", err });
+    res.status(500).json({ message: "Error registering new user", err })
   }
-});
+})
 
-module.exports = router;
+module.exports = router
