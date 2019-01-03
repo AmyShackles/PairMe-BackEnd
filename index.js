@@ -37,6 +37,10 @@ server.get("/oauth", function(req, res) {
   }
 })
 
+server.post("/", (req, res) => {
+  res.status(200).send(req.body.challenge)
+})
+
 server.post("/command", function(req, res) {
   res.send("Your ngrok tunnel is up and running!")
 })
