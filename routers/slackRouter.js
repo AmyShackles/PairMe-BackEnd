@@ -54,9 +54,6 @@ router.post('/', async (req, res) => {
         message
       )
     }
-    console.log(
-      'This would have been the adding of a teacher to the Teacher class.'
-    )
   } else if (text.includes('help')) {
     student._add(topics, user)
     const [user1, user2] = match(topics)
@@ -67,12 +64,12 @@ router.post('/', async (req, res) => {
         message
       )
     }
-    console.log(
-      'This would have been the adding of a student to the Student class.'
-    )
   } else {
-    res.status(422)
-    console.log("I'm sorry, I do not understand that command.")
+    const message = `Hey, @${user}, I do not understand that command.`
+    axios.post(
+      'https://hooks.slack.com/services/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',
+      message
+    )
   }
 })
 
