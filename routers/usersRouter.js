@@ -70,7 +70,7 @@ router.post('/login', async (req, res) => {
     .get(
       `https://slack.com/api/oauth.access?client_id=${
         process.env.CLIENTID
-      }&client_secret=${process.env.CLIENTSECRET}${token}`
+      }&client_secret=${process.env.CLIENTSECRET}&code=${token}`
     )
     .catch(e => console.log('OAuth failure!', e))
   console.log('Access token', access_token)
