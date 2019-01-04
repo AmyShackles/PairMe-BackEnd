@@ -6,7 +6,7 @@ module.exports = {
   getUsers,
   registerUser,
   availableEmail,
-  availableUsername,
+  availableId,
   availableHandle
 }
 
