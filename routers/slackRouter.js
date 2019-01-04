@@ -56,7 +56,7 @@ router.post('/', async (req, res) => {
       }
       const message = `Hey, <@${user1}>, <@${user2}> is available to help!`
       axios.post(
-        'https://hooks.slack.com/services/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',
+        'https://hooks.slack.com/services/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',
         { text: message }
       )
     }
@@ -70,14 +70,14 @@ router.post('/', async (req, res) => {
       }
       const message = `Hey, <@${user1}>, <@${user2}> is available to help!`
       axios.post(
-        'https://hooks.slack.com/services/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',
+        'https://hooks.slack.com/services/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',
         { text: message }
       )
     }
   } else {
     const message = `Hey, <@${user}>, I do not understand that command.`
     axios.post(
-      'https://hooks.slack.com/services/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',
+      'https://hooks.slack.com/services/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',
       { text: message }
     )
   }
