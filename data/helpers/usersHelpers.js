@@ -31,13 +31,17 @@ async function registerUser(data) {
 }
 
 async function updatePoints(user, topic) {
+  let obj = {
+    topic_str: 10
+  }
   const topic_str = `${topic}-score`
   await db('users')
     .where('id', user)
-    .update('topic_str', knex.raw(`${topic_str}` + 10))
+    .increment({ [topic_str]: 10 })
+    .catch(e => console.log('error when incrementing', e))
 }
 
-// true if username is not in database
+// true if usernam[topic_str][ is not in database
 function availableId(user) {
   return db('users')
     .where({ id: user })

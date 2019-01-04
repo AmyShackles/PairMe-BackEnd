@@ -3,7 +3,6 @@ require('dotenv').config()
 const express = require('express')
 const axios = require('axios')
 
-const jwt = require('jsonwebtoken')
 const { student, teacher } = require('../config/Matcher.js')
 
 const usersDb = require('../data/helpers/usersHelpers.js')
