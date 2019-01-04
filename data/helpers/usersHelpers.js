@@ -32,6 +32,7 @@ async function registerUser(data) {
 
 async function updatePoints(user, topic) {
   const topic_str = topic + '-score'
+  console.log(topic_str)
   await db('users')
     .where({ id: user })
     .increment(topic_str, 10)
