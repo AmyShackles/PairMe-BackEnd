@@ -75,7 +75,7 @@ router.post('/login', async (req, res) => {
   const userData = await axios
     .get(`https://slack.com/api/users.identity?token=${access_token}&pretty=1`)
     .catch(e => console.log('Error getting user Data', e))
-
+  console.log(userData)
   res.status(200).send({ data: userData.user })
 })
 
