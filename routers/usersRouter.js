@@ -34,4 +34,11 @@ router.post('/login', async (req, res) => {
     .send({ data: response.data, s_queue: student, t_queue: teacher })
 })
 
+router.post('/scores', (req, res) => {
+  const { user } = req.body
+  const scores = usersDb.findScores(user)
+
+  res.status(200).send(scores)
+})
+
 module.exports = router

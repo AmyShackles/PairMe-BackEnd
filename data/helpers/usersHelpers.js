@@ -4,7 +4,8 @@ module.exports = {
   getUsers,
   registerUser,
   availableId,
-  updatePoints
+  updatePoints,
+  findScores
 }
 
 // return all users, empty array if no users
@@ -47,4 +48,12 @@ function availableId(user) {
         return true
       }
     })
+}
+
+async function findScores(user) {
+  const result = await db('users')
+    .where({ id: user })
+    .select('js-score', 'react-score', 'css-score', 'python-score')
+    .catch(e => console.log('Error getting scores!!', e))
+  return result
 }
