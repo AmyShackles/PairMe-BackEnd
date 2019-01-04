@@ -55,7 +55,7 @@ router.post('/', async (req, res) => {
     const [user1, user2, topic] = match(topics)
 
     if (user1 && user2) {
-      const registered = availableId(user2)
+      const registered = await availableId(user2)
       if (!registered) {
         updatePoints(user2, topic)
       }
@@ -70,7 +70,7 @@ router.post('/', async (req, res) => {
     const [user1, user2, topic] = match(topics)
 
     if (user1 && user2) {
-      const registered = availableId(user2)
+      const registered = await availableId(user2)
       if (!registered) {
         updatePoints(user2, topic)
       }

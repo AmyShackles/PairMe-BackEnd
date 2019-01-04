@@ -31,7 +31,7 @@ async function registerUser(data) {
 }
 
 async function updatePoints(user, topic) {
-  console.log('topic:', topic, 'user:', user)
+  const score = await console.log('topic:', topic, 'user:', user)
   const topic_str = `${topic}-score`
   await db('users')
     .where('id', user)
