@@ -10,6 +10,7 @@ const usersDb = require('../data/helpers/usersHelpers.js')
 const router = express.Router()
 
 router.post('/login', async (req, res) => {
+  console.log('sanity check')
   const { token } = req.body
   const response = await axios
     .get(

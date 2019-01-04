@@ -42,7 +42,7 @@ router.get('/oauth', function(req, res) {
 
 router.post('/', async (req, res) => {
   res.status(200).send({ ok: true })
-  console.log('req:', req)
+  console.log('sanity check')
   const { text, user } = req.body.event
   const topics = text.split(' ')
   if (topics[0][0] === '@') {
