@@ -59,6 +59,7 @@ router.post('/', async (req, res) => {
         'https://hooks.slack.com/services/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',
         { text: message }
       )
+      console.log(message)
     }
   } else if (text.includes('help')) {
     student._add(topics, user)
@@ -73,6 +74,7 @@ router.post('/', async (req, res) => {
         'https://hooks.slack.com/services/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',
         { text: message }
       )
+      console.log(message)
     }
   } else {
     const message = `Hey, <@${user}>, I do not understand that command.`
@@ -80,6 +82,7 @@ router.post('/', async (req, res) => {
       'https://hooks.slack.com/services/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',
       { text: message }
     )
+    console.log(message)
   }
 })
 
