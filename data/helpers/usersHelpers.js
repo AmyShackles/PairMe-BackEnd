@@ -31,11 +31,16 @@ async function registerUser(data) {
 }
 
 async function updatePoints(user, topic) {
-  const score = await console.log('topic:', topic, 'user:', user)
+  console.log('topic:', topic, 'user:', user)
   const topic_str = `${topic}score`
+  const score = await db('users')
+    .select(topic_str)
+    .where('id', user)
+    .catch(e => console.log('error fetching score', e))
+
   await db('users')
     .where('id', user)
-    .increment(topic_str, 10)
+    .update(topic_str, score + 10)
     .catch(e => console.log('error when incrementing', e))
 }
 
