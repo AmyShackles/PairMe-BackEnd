@@ -81,7 +81,7 @@ router.post('/login', async (req, res) => {
       }&client_secret=${process.env.CLIENTSECRET}&code=${token}`
     )
     .catch(e => console.log('OAuth failure!', e))
-  console.log('Access token', access_token)
+
   res.status(200).send({ data: response.data })
 
   // const userData = await axios
