@@ -3,7 +3,8 @@ const db = require('../dbConfig.js')
 module.exports = {
   getUsers,
   registerUser,
-  availableId
+  availableId,
+  updatePoints
 }
 
 // return all users, empty array if no users
@@ -26,6 +27,13 @@ async function registerUser(data) {
   // no catch to let the error bubble up for the "parent" try / catch block
   const u_id = await db('users').insert(user)
   return u_id
+}
+
+async function updatePoints(user, topic) {
+  const topic_str = topic + '-score'
+  db('users')
+    .where({ id: user })
+    .increment({ [topic_str]: 10 })
 }
 
 // true if username is not in database

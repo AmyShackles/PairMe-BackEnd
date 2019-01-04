@@ -60,7 +60,7 @@ function match(topics) {
     ) {
       const student_id = student._remove(topics[i])
       const teacher_id = teacher._remove(topics[i])
-      return [student_id, teacher_id]
+      return [student_id, teacher_id, topics[i]]
     }
   }
   return []
