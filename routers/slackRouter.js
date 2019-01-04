@@ -49,7 +49,6 @@ router.post('/', async (req, res) => {
   if (text.includes('assist')) {
     teacher._add(topics, user)
     const [user1, user2, topic] = match(topics)
-    console.log('user1 ', user1, 'user2', user2, 'topic', topic)
 
     if (user1 && user2) {
       const registered = availableId(user2)
@@ -61,12 +60,10 @@ router.post('/', async (req, res) => {
         'https://hooks.slack.com/services/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',
         { text: message }
       )
-      console.log(message)
     }
   } else if (text.includes('help')) {
     student._add(topics, user)
     const [user1, user2, topic] = match(topics)
-    console.log('user1 ', user1, 'user2', user2, 'topic', topic)
 
     if (user1 && user2) {
       const registered = availableId(user2)
@@ -78,7 +75,6 @@ router.post('/', async (req, res) => {
         'https://hooks.slack.com/services/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',
         { text: message }
       )
-      console.log(message)
     }
   } else {
     const message = `Hey, <@${user}>, I do not understand that command.`
@@ -86,7 +82,6 @@ router.post('/', async (req, res) => {
       'https://hooks.slack.com/services/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',
       { text: message }
     )
-    console.log(message)
   }
 })
 
