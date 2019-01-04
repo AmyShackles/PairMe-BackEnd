@@ -31,15 +31,15 @@ async function registerUser(data) {
 
 async function updatePoints(user, topic) {
   const topic_str = topic + '-score'
-  db('users')
+  await db('users')
     .where({ id: user })
     .increment({ [topic_str]: 10 })
 }
 
 // true if username is not in database
-function availableId(id) {
+function availableId(user) {
   return db('users')
-    .where({ id })
+    .where({ id: user })
     .then(result => {
       if (result.length) {
         return false
