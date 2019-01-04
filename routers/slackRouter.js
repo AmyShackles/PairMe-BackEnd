@@ -62,11 +62,12 @@ router.post('/', async (req, res) => {
     }
   } else if (text.includes('help')) {
     student._add(topics, user)
-    const registered = availableId(user2)
-    if (!registered) {
-      updatePoints(user2, topic)
-    }
+
     if (user1 && user2) {
+      const registered = availableId(user2)
+      if (!registered) {
+        updatePoints(user2, topic)
+      }
       const message = `Hey, <@${user1}>, <@${user2}> is available to help!`
       axios.post(
         'https://hooks.slack.com/services/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',
