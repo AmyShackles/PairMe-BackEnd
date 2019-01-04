@@ -60,9 +60,13 @@ router.post('/login', async (req, res) => {
     )
     .catch(e => console.log('OAuth failure!', e))
 
-  const avail = await usersDb.availableUsername(response.data.user.name)
+  const avail = await usersDb
+    .availableUsername(response.data.user.name)
+    .catch(e => 'Error checking for availability', e)
   if (avail) {
-    const id = await usersDb.registerUser(response.data)
+    const id = await usersDb
+      .registerUser(response.data)
+      .catch(e => console.log('error creating new user!', e))
   }
   res.status(200).send({ data: response.data })
 })
