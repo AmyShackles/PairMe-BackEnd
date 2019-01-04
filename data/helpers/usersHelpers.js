@@ -34,7 +34,7 @@ async function updatePoints(user, topic) {
   const topic_str = topic + '-score'
   await db('users')
     .where({ id: user })
-    .update({ topic_str: knex.raw(topic_str + 10) })
+    .increment(topic_str, 10)
 }
 
 // true if username is not in database
