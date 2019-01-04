@@ -27,19 +27,6 @@ const generateToken = user => {
   return jwt.sign(payload, secret, options)
 }
 
-// [GET] /api/users
-// returns array of all users in db (or empty if none)
-// router.get("/", (req, res) => {
-//   usersDb
-//     .getUsers()
-//     .then(users => {
-//       res.status(200).json(users)
-//     })
-//     .catch(err => {
-//       res.status(500).json({ message: "Error retreiving users" })
-//     })
-// })
-
 // [POST] /api/users/register
 // registers an new user
 router.post('/checkuser', async (req, res) => {
