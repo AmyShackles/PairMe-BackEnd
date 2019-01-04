@@ -4,7 +4,6 @@
   "description": "This is the back-end project for PairMe, the Winter 2019 Hackathon",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
     "server": "nodemon",
     "start": "node index.js"
   },
