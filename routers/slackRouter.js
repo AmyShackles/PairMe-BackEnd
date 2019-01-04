@@ -45,6 +45,9 @@ router.post('/', async (req, res) => {
   console.log('req:', req)
   const { text, user } = req.body.event
   const topics = text.split(' ')
+  if (topics[0][0] === '@') {
+    topics.splice(0, 1)
+  }
   topics.splice(0, 1)
 
   if (text.includes('assist')) {
