@@ -72,7 +72,9 @@ router.post('/login', async (req, res) => {
     'clientid',
     process.env.CLIENTID,
     'clientsecret',
-    process.env.CLIENTSECRET
+    process.env.CLIENTSECRET,
+    'token',
+    token
   )
   const response = await axios
     .get(
