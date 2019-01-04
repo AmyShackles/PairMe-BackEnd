@@ -4,6 +4,7 @@ const express = require('express')
 const axios = require('axios')
 
 const jwt = require('jsonwebtoken')
+const { student, teacher } = require('../config/Matcher.js')
 
 const usersDb = require('../data/helpers/usersHelpers.js')
 
@@ -69,7 +70,9 @@ router.post('/login', async (req, res) => {
       .registerUser(response.data)
       .catch(e => console.log('error creating new user!', e))
   }
-  res.status(200).send({ data: response.data })
+  res
+    .status(200)
+    .send({ data: response.data, s_queue: student, t_queue: teacher })
 })
 
 module.exports = router
