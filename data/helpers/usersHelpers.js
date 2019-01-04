@@ -4,7 +4,8 @@ module.exports = {
   getUsers,
   registerUser,
   availableId,
-  updatePoints
+  updatePoints,
+  findScores
 }
 
 // return all users, empty array if no users
@@ -15,12 +16,12 @@ function getUsers() {
 // register new user if valid
 async function registerUser(data) {
   const { access_token } = data
-  const { id, name, email, avatar_512 } = data.user
+  const { id, name, email, image_512 } = data.user
   const user = {
     id,
     username: name,
     email,
-    avatar: avatar_512,
+    avatar: image_512,
     access_token
   }
 
@@ -30,13 +31,20 @@ async function registerUser(data) {
 }
 
 async function updatePoints(user, topic) {
-  const topic_str = topic + '-score'
+  console.log('topic:', topic, 'user:', user)
+  const topic_str = `${topic}score`
+  const score = await db('users')
+    .select(topic_str)
+    .where('id', user)
+    .catch(e => console.log('error fetching score', e))
+
   await db('users')
-    .where({ id: user })
-    .increment({ [topic_str]: 10 })
+    .where('id', user)
+    .update(topic_str, score + 10)
+    .catch(e => console.log('error when incrementing', e))
 }
 
-// true if username is not in database
+// true if usernam[topic_str][ is not in database
 function availableId(user) {
   return db('users')
     .where({ id: user })
@@ -47,4 +55,12 @@ function availableId(user) {
         return true
       }
     })
+}
+
+async function findScores(user) {
+  const result = await db('users')
+    .where({ id: user })
+    .select('jsscore', 'reactscore', 'cssscore', 'pythonscore')
+    .catch(e => console.log('Error getting scores!!', e))
+  return result
 }

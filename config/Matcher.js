@@ -54,6 +54,7 @@ const student = new Student()
 
 function match(topics) {
   for (let i = 0; i < topics.length; i++) {
+    console.log(topics[i])
     if (
       student._peek(topics[i].toLowerCase()) &&
       teacher._peek(topics[i].toLowerCase())
