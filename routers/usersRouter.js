@@ -65,6 +65,7 @@ router.post('/slackhandle', async (req, res) => {
 
 router.post('/login', async (req, res) => {
   const { token } = req.params
+  console.log('token', token)
   const { access_token } = await axios
     .get(
       `https://slack.com/api/oauth.access?client_id=${
@@ -72,11 +73,13 @@ router.post('/login', async (req, res) => {
       }&client_secret=${process.env.CLIENTSECRET}${token}`
     )
     .catch(e => console.log('OAuth failure!', e))
+  console.log('Access token', access_token)
+
   const userData = await axios
     .get(`https://slack.com/api/users.identity?token=${access_token}&pretty=1`)
     .catch(e => console.log('Error getting user Data', e))
   console.log(userData)
-  res.status(200).send({ data: userData.user })
+  res.status(200).send({ data: userData.data })
 })
 
 router.post('/register', async (req, res) => {
