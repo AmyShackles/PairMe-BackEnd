@@ -42,7 +42,7 @@ router.get('/oauth', function(req, res) {
 
 router.post('/', async (req, res) => {
   res.status(200).send({ ok: true })
-  console.log('req.body:', req.body)
+  console.log('req.body:', req.body, req.params)
   const { text, user } = req.body.event
   const topics = text.split(' ')
   topics.splice(0, 1)
