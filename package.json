@@ -4,7 +4,6 @@
   "description": "This is the back-end project for PairMe, the Winter 2019 Hackathon",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
     "server": "nodemon",
     "start": "node index.js"
   },
@@ -41,6 +40,7 @@
     "jsonwebtoken": "^8.4.0",
     "knex": "^0.16.3",
     "morgan": "^1.9.1",
+    "pg": "^7.7.1",
     "request": "^2.88.0",
     "slackbots": "^1.2.0",
     "sqlite3": "^4.0.4"

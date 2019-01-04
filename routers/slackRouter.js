@@ -2,6 +2,7 @@ require('dotenv').config()
 const axios = require('axios')
 const router = require('express').Router()
 const { student, teacher, match } = require('../config/Matcher.js')
+const { availableId, updatePoints } = require('../data/helpers/usersHelpers')
 const clientID = process.env.CLIENTID
 const clientSecret = process.env.CLIENTSECRET
 const request = require('request')
@@ -39,8 +40,7 @@ router.get('/oauth', function(req, res) {
   }
 })
 
-router.post('/', (req, res) => {
-  console.log(req.body)
+router.post('/', async (req, res) => {
   res.status(200).send({ ok: true })
   const { text, user } = req.body.event
   const topics = text.split(' ')
@@ -48,35 +48,41 @@ router.post('/', (req, res) => {
 
   if (text.includes('assist')) {
     teacher._add(topics, user)
-    const [user1, user2] = match(topics)
+    const [user1, user2, topic] = match(topics)
+
     if (user1 && user2) {
+      const registered = availableId(user2)
+      if (!registered) {
+        updatePoints(user2, topic)
+      }
       const message = `Hey, <@${user1}>, <@${user2}> is available to help!`
       axios.post(
-        'https://hooks.slack.com/services/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',
+        'https://hooks.slack.com/services/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',
         { text: message }
       )
     }
   } else if (text.includes('help')) {
     student._add(topics, user)
-    const [user1, user2] = match(topics)
+    const [user1, user2, topic] = match(topics)
+
     if (user1 && user2) {
+      const registered = availableId(user2)
+      if (!registered) {
+        updatePoints(user2, topic)
+      }
       const message = `Hey, <@${user1}>, <@${user2}> is available to help!`
       axios.post(
-        'https://hooks.slack.com/services/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',
+        'https://hooks.slack.com/services/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',
         { text: message }
       )
     }
   } else {
     const message = `Hey, <@${user}>, I do not understand that command.`
     axios.post(
-      'https://hooks.slack.com/services/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',
+      'https://hooks.slack.com/services/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',
       { text: message }
     )
   }
-})
-
-router.post('/command', function(req, res) {
-  res.send('Your ngrok tunnel is up and running!')
 })
 
 module.exports = router
