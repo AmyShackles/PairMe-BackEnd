@@ -46,6 +46,7 @@ router.post('/', async (req, res) => {
   const topics = text.split(' ')
   topics.splice(0, 1)
   const [user1, user2, topic] = match(topics)
+  console.log('user1 ', user1, 'user2', user2, 'topic', topic)
 
   if (text.includes('assist')) {
     teacher._add(topics, user)
