@@ -67,7 +67,7 @@ router.post('/login', async (req, res) => {
   //'https://slack.com/api/oauth.access?client_id=154966377728.516246535895
   //&client_secret=8038c1564ae0eadcd2264240f41844a
   //&code=154966377728.515573136256.2ad81449ee60f61a8e08161e7ecb8def8fe98400f4519d123af8408bdc6cf814'
-  const { token } = req.params
+  const { token } = req.body
   console.log(
     'clientid',
     process.env.CLIENTID,
