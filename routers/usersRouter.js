@@ -61,27 +61,15 @@ router.post('/login', async (req, res) => {
     .catch(e => console.log('OAuth failure!', e))
 
   const avail = await usersDb
-    .availableUsername(response.data.user.name)
-    .catch(e => 'Error checking for availability', e)
+    .availableId(response.data.user.id)
+    .catch(e => console.log('Error checking for availability', e))
+
   if (avail) {
     const id = await usersDb
       .registerUser(response.data)
       .catch(e => console.log('error creating new user!', e))
   }
   res.status(200).send({ data: response.data })
-})
-
-router.post('/register', async (req, res) => {
-  const newUser = req.body
-  try {
-    const insertResponse = await usersDb.registerUser(newUser)
-
-    const token = generateToken(newUser)
-
-    res.status(201).json({ insertResponse, token })
-  } catch (err) {
-    res.status(500).json({ message: 'Error registering new user', err })
-  }
 })
 
 module.exports = router

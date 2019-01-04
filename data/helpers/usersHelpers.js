@@ -33,10 +33,9 @@ async function registerUser(data) {
 }
 
 // true if username is not in database
-function availableUsername(name) {
-  name = name.toLowerCase()
+function availableId(id) {
   return db('users')
-    .where({ username: name })
+    .where({ id })
     .then(result => {
       if (result.length) {
         return false
