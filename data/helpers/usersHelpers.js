@@ -32,10 +32,10 @@ async function registerUser(data) {
 
 async function updatePoints(user, topic) {
   const score = await console.log('topic:', topic, 'user:', user)
-  const topic_str = `${topic}-score`
+  const topic_str = `${topic}score`
   await db('users')
     .where('id', user)
-    .increment({ [topic_str]: 10 })
+    .increment(topic_str, 10)
     .catch(e => console.log('error when incrementing', e))
 }
 
@@ -55,7 +55,7 @@ function availableId(user) {
 async function findScores(user) {
   const result = await db('users')
     .where({ id: user })
-    .select('js-score', 'react-score', 'css-score', 'python-score')
+    .select('jsscore', 'reactscore', 'cssscore', 'pythonscore')
     .catch(e => console.log('Error getting scores!!', e))
   return result
 }
