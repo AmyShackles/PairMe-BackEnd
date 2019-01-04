@@ -23,10 +23,10 @@ exports.up = function(knex, Promise) {
 
     tbl.string('avatar', 1024).unique()
 
-    tbl.integer('react-score')
-    tbl.integer('python-score')
-    tbl.integer('css-score')
-    tbl.integer('js-score')
+    tbl.integer('react-score').defaultTo(0)
+    tbl.integer('python-score').defaultTo(0)
+    tbl.integer('css-score').defaultTo(0)
+    tbl.integer('js-score').defaultTo(0)
 
     tbl.string('access_token').unique()
   })

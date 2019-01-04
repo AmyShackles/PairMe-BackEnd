@@ -16,12 +16,12 @@ function getUsers() {
 // register new user if valid
 async function registerUser(data) {
   const { access_token } = data
-  const { id, name, email, avatar_512 } = data.user
+  const { id, name, email, image_512 } = data.user
   const user = {
     id,
     username: name,
     email,
-    avatar: avatar_512,
+    avatar: image_512,
     access_token
   }
 
