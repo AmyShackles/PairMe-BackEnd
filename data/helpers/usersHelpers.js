@@ -1,18 +1,14 @@
 const db = require('../dbConfig.js')
 
-const bcrypt = require('bcryptjs')
-
 module.exports = {
   getUsers,
   registerUser,
-  availableEmail,
-  availableId,
-  availableHandle
+  availableId
 }
 
 // return all users, empty array if no users
 function getUsers() {
-  return db('users').select('id', 'username', 'email', 'slack_handle')
+  return db('users').select('*')
 }
 
 // register new user if valid
@@ -36,34 +32,6 @@ async function registerUser(data) {
 function availableId(id) {
   return db('users')
     .where({ id })
-    .then(result => {
-      if (result.length) {
-        return false
-      } else {
-        return true
-      }
-    })
-}
-
-// true if email not in database
-function availableEmail(name) {
-  name = name.toLowerCase()
-  return db('users')
-    .where({ email: name })
-    .then(result => {
-      if (result.length) {
-        return false
-      } else {
-        return true
-      }
-    })
-}
-
-// true if email not in database
-function availableHandle(name) {
-  name = name.toLowerCase()
-  return db('users')
-    .where({ slack_handle: name })
     .then(result => {
       if (result.length) {
         return false
