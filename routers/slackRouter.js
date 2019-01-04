@@ -7,10 +7,10 @@ const clientSecret = process.env.CLIENTSECRET
 const request = require('request')
 
 // uncomment for URL registration with slack API
-router.post('/', (req, res) => {
-  const { challenge } = req.body
-  res.send(challenge)
-})
+// router.post('/', (req, res) => {
+//   const { challenge } = req.body
+//   res.send(challenge)
+// })
 
 router.get('/oauth', function(req, res) {
   if (!req.query.code) {
