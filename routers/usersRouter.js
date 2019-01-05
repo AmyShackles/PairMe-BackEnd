@@ -3,7 +3,6 @@ require('dotenv').config()
 const express = require('express')
 const axios = require('axios')
 
-const jwt = require('jsonwebtoken')
 const { student, teacher } = require('../config/Matcher.js')
 
 const usersDb = require('../data/helpers/usersHelpers.js')
@@ -11,6 +10,7 @@ const usersDb = require('../data/helpers/usersHelpers.js')
 const router = express.Router()
 
 router.post('/login', async (req, res) => {
+  console.log('sanity check')
   const { token } = req.body
   const response = await axios
     .get(

@@ -31,13 +31,20 @@ async function registerUser(data) {
 }
 
 async function updatePoints(user, topic) {
-  const topic_str = topic + '-score'
+  console.log('topic:', topic, 'user:', user)
+  const topic_str = `${topic}score`
+  const score = await db('users')
+    .select(topic_str)
+    .where('id', user)
+    .catch(e => console.log('error fetching score', e))
+
   await db('users')
-    .where({ id: user })
-    .update({ topic_str: knex.raw(topic_str + 10) })
+    .where('id', user)
+    .update(topic_str, score + 10)
+    .catch(e => console.log('error when incrementing', e))
 }
 
-// true if username is not in database
+// true if usernam[topic_str][ is not in database
 function availableId(user) {
   return db('users')
     .where({ id: user })
@@ -53,7 +60,7 @@ function availableId(user) {
 async function findScores(user) {
   const result = await db('users')
     .where({ id: user })
-    .select('js-score', 'react-score', 'css-score', 'python-score')
+    .select('jsscore', 'reactscore', 'cssscore', 'pythonscore')
     .catch(e => console.log('Error getting scores!!', e))
   return result
 }
