@@ -39,7 +39,7 @@ router.get('/oauth', function(req, res) {
   }
 })
 
-router.post('/receive', async (req, res) => {
+router.post('/', async (req, res) => {
   res.status(200).send({ ok: true })
   console.log('sanity check')
   const { text, user } = req.body.event
