@@ -7,10 +7,10 @@ const clientID = process.env.CLIENTID
 const clientSecret = process.env.CLIENTSECRET
 const request = require('request')
 
-router.post('/', (req, res) => {
-  const { challenge } = req.body
-  res.send(challenge)
-})
+// router.post('/', (req, res) => {
+//   const { challenge } = req.body
+//   res.send(challenge)
+// })
 
 router.get('/oauth', function(req, res) {
   if (!req.query.code) {
